@@ -6,7 +6,7 @@
 *.dll
 *.so
 *.dylib
-#.idea
+.idea
 *.idea
 
 
