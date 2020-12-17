@@ -1,0 +1,6 @@
+{% set libevent = salt['grains.filter_by']({
+    'RedHat': {
+      'libevent_basedir': '/usr/local/libevent',
+      'libevent_version': 'libevent-2.0.22-stable',
+    },
+}, grain='os_family', merge=salt['pillar.get']('libevent')) %}

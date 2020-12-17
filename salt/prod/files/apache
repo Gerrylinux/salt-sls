@@ -1,0 +1,13 @@
+/data/wwwlogs/*/*.log
+{
+daily
+rotate 180
+minsize 50k
+dateext
+compress
+nodelaycompress
+sharedscripts
+postrotate
+  /usr/local/apache/bin/httpd -k restart >/dev/null
+endscript
+}

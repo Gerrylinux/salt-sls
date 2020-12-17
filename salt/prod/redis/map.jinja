@@ -1,0 +1,9 @@
+{% set redis = salt['grains.filter_by']({
+    'RedHat': {
+      'redis_basedir': '/usr/local/redis',
+      'redis_version': 'redis-4.0.14',
+      'redis_bin': '/usr/local/redis/bin',
+      'redis_conf_file': '/usr/local/redis/etc/redis.conf',
+      'service_file': '/etc/init.d/redis',
+    },
+}, grain='os_family', merge=salt['pillar.get']('redis')) %}

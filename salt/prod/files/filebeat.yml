@@ -1,0 +1,255 @@
+###################### Filebeat Configuration Example #########################
+
+# This file is an example configuration file highlighting only the most common
+# options. The filebeat.full.yml file from the same directory contains all the
+# supported options with more comments. You can use it as a reference.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
+
+#=========================== Filebeat prospectors =============================
+
+filebeat.prospectors:
+
+# Each - is a prospector. Most options can be set at the prospector level, so
+# you can use different prospectors for various configurations.
+# Below are the prospector specific configurations.
+
+#- input_type: log
+
+  # Paths that should be crawled and fetched. Glob based paths.
+#  paths:
+#     - /data/wwwlogs/*/*.log
+#  document_type: yg_weba
+
+- input_type: log
+  paths:
+     - /var/log/secure
+  document_type: yg_secure
+
+- input_type: log
+  paths:
+     - /var/log/messages
+  document_type: yg_messages
+
+
+    # - /var/log/*.log
+  #- c:\programdata\elasticsearch\logs\*
+
+  # Exclude lines. A list of regular expressions to match. It drops the lines that are
+  # matching any regular expression from the list.
+  #exclude_lines: ["^DBG"]
+
+  # Include lines. A list of regular expressions to match. It exports the lines that are
+  # matching any regular expression from the list.
+  #include_lines: ["^ERR", "^WARN"]
+
+  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
+  # are matching any regular expression from the list. By default, no files are dropped.
+  #exclude_files: [".gz$"]
+
+  # Optional additional fields. These field can be freely picked
+  # to add additional information to the crawled log files for filtering
+fields:
+  cname: yg_etl_06
+fields_under_root: true
+   # level: debug
+  #  review: 1
+
+  ### Multiline options
+
+  # Mutiline can be used for log messages spanning multiple lines. This is common
+  # for Java Stack Traces or C-Line Continuation
+
+  # The regexp Pattern that has to be matched. The example pattern matches all lines starting with [
+  #multiline.pattern: ^\[
+
+  # Defines if the pattern set under pattern should be negated or not. Default is false.
+  #multiline.negate: false
+
+  # Match can be set to "after" or "before". It is used to define if lines should be append to a pattern
+  # that was (not) matched before or after or as long as a pattern is not matched based on negate.
+  # Note: After is the equivalent to previous and before is the equivalent to to next in Logstash
+  #multiline.match: after
+
+
+#================================ General =====================================
+
+# The name of the shipper that publishes the network data. It can be used to group
+# all the transactions sent by a single shipper in the web interface.
+#name:
+
+# The tags of the shipper are included in their own field with each
+# transaction published.
+#tags: ["service-X", "web-tier"]
+
+# Optional fields that you can specify to add additional information to the
+# output.
+#fields:
+#  env: staging
+
+#================================ Outputs =====================================
+
+# Configure what outputs to use when sending the data collected by the beat.
+# Multiple outputs may be used.
+
+#-------------------------- Elasticsearch output ------------------------------
+#output.elasticsearch:
+  # Array of hosts to connect to.
+ # hosts: ["localhost:9200"]
+
+  # Optional protocol and basic auth credentials.
+  #protocol: "https"
+  #username: "elastic"
+  #password: "changeme"
+
+#----------------------------- Logstash output --------------------------------
+#output.logstash:
+  # The Logstash hosts
+  #hosts: ["localhost:5044"]
+
+  # Optional SSL. By default is off.
+  # List of root certificates for HTTPS server verifications
+  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+
+  # Certificate for SSL client authentication
+  #ssl.certificate: "/etc/pki/client/cert.pem"
+
+  # Client Certificate Key
+  #ssl.key: "/etc/pki/client/cert.key"
+
+#================================ Logging =====================================
+
+# Sets log level. The default log level is info.
+# Available log levels are: critical, error, warning, info, debug
+#logging.level: debug
+
+# At debug level, you can selectively enable logging only for some components.
+# To enable all selectors use ["*"]. Examples of other selectors are "beat",
+# "publish", "service".
+#logging.selectors: ["*"]
+#===============================redis======================================
+#output.redis:
+#  enabled: true
+#  hosts: ["172.16.8.167:6379"]
+#  key: nginx-log-test5
+#  datatype: list
+
+#------------------------------- Kafka output ----------------------------------
+output.kafka:
+   enabled: true
+   hosts: ["172.16.208.51:19092","172.16.208.52:19092"] 
+   topic: '%{[type]}'
+
+
+
+
+#================================= Paths ======================================
+
+# The home path for the filebeat installation. This is the default base path
+# for all other path settings and for miscellaneous files that come with the
+# distribution (for example, the sample dashboards).
+# If not set by a CLI flag or in the configuration file, the default for the
+# home path is the location of the binary.
+path.home: /usr/local/filebeat
+
+# The configuration path for the filebeat installation. This is the default
+# base path for configuration files, including the main YAML configuration file
+# and the Elasticsearch template file. If not set by a CLI flag or in the
+# configuration file, the default for the configuration path is the home path.
+#path.config: ${path.home}
+
+# The data path for the filebeat installation. This is the default base path
+# for all the files in which filebeat needs to store its data. If not set by a
+# CLI flag or in the configuration file, the default for the data path is a data
+# subdirectory inside the home path.
+path.data: /usr/local/filebeat/data
+
+# The logs path for a filebeat installation. This is the default location for
+# the Beat's log files. If not set by a CLI flag or in the configuration file,
+# the default for the logs path is a logs subdirectory inside the home path.
+path.logs: /usr/local/filebeat/logs
+
+#============================== Dashboards =====================================
+# These settings control loading the sample dashboards to the Kibana index. Loading
+# the dashboards is disabled by default and can be enabled either by setting the
+# options here, or by using the `-setup` CLI flag.
+#dashboards.enabled: false
+
+# The URL from where to download the dashboards archive. By default this URL
+# has a value which is computed based on the Beat name and version. For released
+# versions, this URL points to the dashboard archive on the artifacts.elastic.co
+# website.
+#dashboards.url:
+
+# The directory from where to read the dashboards. It is used instead of the URL
+# when it has a value.
+#dashboards.directory:
+
+# The file archive (zip file) from where to read the dashboards. It is used instead
+# of the URL when it has a value.
+#dashboards.file:
+
+# If this option is enabled, the snapshot URL is used instead of the default URL.
+#dashboards.snapshot: false
+
+# The URL from where to download the snapshot version of the dashboards. By default
+# this has a value which is computed based on the Beat name and version.
+#dashboards.snapshot_url
+
+# In case the archive contains the dashboards from multiple Beats, this lets you
+# select which one to load. You can load all the dashboards in the archive by
+# setting this to the empty string.
+#dashboards.beat: filebeat
+
+# The name of the Kibana index to use for setting the configuration. Default is ".kibana"
+#dashboards.kibana_index: .kibana
+
+# The Elasticsearch index name. This overwrites the index name defined in the
+# dashboards and index pattern. Example: testbeat-*
+#dashboards.index:
+
+#================================ Logging ======================================
+# There are three options for the log output: syslog, file, stderr.
+# Under Windows systems, the log files are per default sent to the file output,
+# under all other system per default to syslog.
+
+# Sets log level. The default log level is info.
+# Available log levels are: critical, error, warning, info, debug
+#logging.level: info
+
+# Enable debug output for selected components. To enable all selectors use ["*"]
+# Other available selectors are "beat", "publish", "service"
+# Multiple selectors can be chained.
+#logging.selectors: [ ]
+
+# Send all logging output to syslog. The default is false.
+#logging.to_syslog: true
+
+# If enabled, filebeat periodically logs its internal metrics that have changed
+# in the last period. For each metric that changed, the delta from the value at
+# the beginning of the period is logged. Also, the total values for
+# all non-zero internal metrics are logged on shutdown. The default is true.
+#logging.metrics.enabled: true
+
+# The period after which to log the internal metrics. The default is 30s.
+#logging.metrics.period: 30s
+
+# Logging to rotating files files. Set logging.to_files to false to disable logging to
+# files.
+logging.to_files: true
+logging.files:
+  # Configure the path where the logs are written. The default is the logs directory
+  # under the home path (the binary location).
+  #path: /var/log/filebeat
+
+  # The name of the files where the logs are written to.
+  #name: filebeat
+
+  # Configure log file size limit. If limit is reached, log file will be
+  # automatically rotated
+  rotateeverybytes: 10485760
+
+  # Number of rotated log files to keep. Oldest files will be deleted first.
+  keepfiles: 10
+

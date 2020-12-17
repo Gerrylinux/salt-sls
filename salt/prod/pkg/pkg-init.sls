@@ -1,0 +1,76 @@
+Deveploer-tools:
+  cmd.run:
+    - names:
+      - yum -y install epel-release
+      - yum clean all 
+
+Basic_environment:
+  pkg.installed:
+    - pkgs:
+      - gcc
+      - gcc-c++
+      - libstdc++-devel
+      - flex
+      - bison
+      - autoconf
+      - automake
+      - bzip2
+      - bzip2-devel
+      - zlib-devel
+      - ncurses
+      - glances
+      - ncurses-devel
+      - libpng
+      - libpng-devel
+      - libtiff-devel
+      - freetype
+      - freetype-devel
+      - pam
+      - pam-devel
+      - expat-devel
+      - openssl
+      - openssl-devel
+      - openldap-devel
+      - libxslt-devel
+      - gettext-devel
+      - libtool
+      - aspell-devel
+      - gmp-devel
+      - ImageMagick
+      - ImageMagick-devel
+      - gd
+      - gd-devel
+      - libtool-ltdl-devel
+      - zlib
+      - zlib-devel
+      - libxml2
+      - libxml2-devel
+      - curl
+      - e2fsprogs
+      - e2fsprogs-devel
+      - keyutils-libs-devel
+      - libsepol-devel
+      - krb5-devel
+      - glibc
+      - glibc-devel
+      - glib2
+      - glib2-devel
+      - glibc-common
+      - libidn
+      - libidn-devel
+      - gdbm
+      - gdbm-devel
+      - libart_lgpl-devel
+      - pcre
+      - pcre-devel
+      - re2c
+      - cmake
+      - libarchive
+      - libmcrypt
+      - libmcrypt-devel
+      - lrzsz
+      - sysstat
+      - unzip
+      - bash-completion
+    - require:
+      - cmd: Deveploer-tools

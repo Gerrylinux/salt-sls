@@ -1,0 +1,15 @@
+[Unit]
+Description=Redis Server Manager
+After=syslog.target
+After=network.target
+ 
+[Service]
+Type=simple
+User=redis
+Group=redis
+ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
+ExecStop=/usr/local/redis/bin/redis-cli shutdown
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target

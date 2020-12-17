@@ -1,0 +1,14 @@
+pool:                 www
+process manager:      dynamic
+start time:           15/Nov/2017:14:10:28 +0800
+start since:          1042825
+accepted conn:        155790
+listen queue:         0
+max listen queue:     1
+listen queue len:     128
+idle processes:       1
+active processes:     1
+total processes:      2
+max active processes: 2
+max children reached: 0
+slow requests:        0

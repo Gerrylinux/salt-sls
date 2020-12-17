@@ -1,0 +1,13 @@
+{% set nginx = salt['grains.filter_by']({
+    'RedHat': {
+      'conf_dir': '/usr/local/nginx/conf/',
+      'log_dir': '/data/wwwlogs/',
+      'nginx_version': 'nginx-1.16.1',
+      'nginx_basedir': '/usr/local/nginx',
+      'conf_file': '/usr/local/nginx/conf/nginx.conf',
+      'service_file': '/lib/systemd/system/nginx.service',
+      'sbin_dir_file': '/usr/local/nginx/sbin/nginx',
+      'logrotate_conf': '/etc/logrotate.d/nginx',
+      'nginx_vhosts': '/usr/local/nginx/conf/vhosts',
+    },
+}, grain='os_family', merge=salt['pillar.get']('nginx')) %}

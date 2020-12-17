@@ -1,0 +1,16 @@
+{% set mysql = salt['grains.filter_by']({
+    'RedHat': {
+      'innodb_dir': '/data/mysql/innodb',
+      'mysql_version': 'mysql-5.7.27',
+      'boost_version': 'boost_1_59_0',
+      'boost_dir': '/usr/local/boost',
+      'mysql_basedir': '/usr/local/mysql',
+      'mysql_data': '/data/mysql/data',
+      'mysql_logs': '/data/mysql/logs',
+      'conf_file': '/etc/my.cnf',
+      'service_file': '/lib/systemd/system/mysqld.service',
+      'sbin_dir_file': '/usr/local/mysql/sbin/mysql',
+      'mysql_bin': '/usr/local/mysql/bin',
+      'mysql_sock': '/tmp/mysql.sock',
+    },
+}, grain='os_family', merge=salt['pillar.get']('mysql')) %}

@@ -1,0 +1,7 @@
+{% set filebeat = salt['grains.filter_by']({
+    'RedHat': {
+      'filebeat_version': 'filebeat-5.1.1',
+      'conf_file': '/etc/filebeat/filebeat.yml',
+      'processor': 'x86_64'
+    },
+}, grain='os_family', merge=salt['pillar.get']('filebeat')) %}

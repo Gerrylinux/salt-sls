@@ -1,0 +1,12 @@
+/data/wwwlogs/*/*.log
+{
+daily
+rotate 180
+minsize 1M
+dateext
+compress
+sharedscripts
+postrotate
+  /usr/local/nginx/sbin/nginx -s reload
+endscript
+}
